@@ -6,14 +6,15 @@
 
 #include "types/error.h"
 
-#define SIMPLE_MEMORY_RESERVE(mp_type, mp_output, mp_current_capacity, mp_min_capacity, mp_error) \
+#define SIMPLE_MEMORY_RESERVE(id_type, m_output, m_capacity, p_min_capacity, m_error) \
     do { \
-        (mp_error) = SIMPLE_OK; \
-        size_t new_capacity = (mp_current_capacity); \
-        while(new_capacity < (mp_min_capacity)) new_capacity *= 2; \
-        const size_t bytes = new_capacity * sizeof(mp_type); \
-        if(((mp_output) = (mp_type*)realloc((void*)(mp_output), bytes)) == NULL) { \
-            (mp_error) = SIMPLE_ALLOCATE_FAIL; \
+        (m_error) = SIMPLE_OK; \
+        size_t new_capacity = (m_capacity); \
+        while(new_capacity < (p_min_capacity)) new_capacity *= 2; \
+        const size_t bytes = new_capacity * sizeof(id_type); \
+        if(((m_output) = (id_type*)realloc((void*)(m_output), bytes)) == NULL) { \
+            (m_error) = SIMPLE_ALLOCATE_FAIL; \
+            (m_capacity) = 0; \
             SIMPLE_PRINT_CANT_ALLOCATE_MEMORY(bytes); \
         } \
     } while(false);
