@@ -1,12 +1,12 @@
-#ifndef _SIMPLE_MEMORY_H_
-#define _SIMPLE_MEMORY_H_
+#ifndef _SIMPLE_MACROS_MEMORY_H_
+#define _SIMPLE_MACROS_MEMORY_H_
 
 #include <stdlib.h>
 #include <stdbool.h>
 
 #include "types/error.h"
 
-#define SIMPLE_MEMORY_RESERVE(id_type, m_output, m_capacity, p_min_capacity, m_error) \
+#define SIMPLE_MACROS_MEMORY_RESERVE(id_type, m_output, m_capacity, p_min_capacity, m_error) \
     do { \
         (m_error) = SIMPLE_OK; \
         size_t new_capacity = (m_capacity); \
@@ -15,8 +15,8 @@
         if(((m_output) = (id_type*)realloc((void*)(m_output), bytes)) == NULL) { \
             (m_error) = SIMPLE_ALLOCATE_FAIL; \
             (m_capacity) = 0; \
-            SIMPLE_PRINT_CANT_ALLOCATE_MEMORY(bytes); \
+            SIMPLE_PRINT_CANT_ALLOCATE_MACROS_MEMORY(bytes); \
         } \
     } while(false);
 
-#endif//_SIMPLE_MEMORY_H_
+#endif//_SIMPLE_MACROS_MEMORY_H_
