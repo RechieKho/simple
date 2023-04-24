@@ -48,3 +48,20 @@ void simple_types_string_copy(simple_types_string_t* m_dest, const simple_types_
 
     memcpy(m_dest->data, p_source->data, p_source->capacity * sizeof(char));
 }
+
+simple_types_error_t simple_types_string_append_char(simple_types_string_t* m_string, char p_character) {
+    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(
+        m_string == NULL, 
+        SIMPLE_FAIL_INVALID_ARGUMENTS, 
+        "Unexpected NULL as the 1st argument."
+    );
+
+    simple_types_error_t error = SIMPLE_OK;
+    error = simple_types_string_reserve(m_string, m_string->size + 1);
+    SIMPLE_MACROS_ERROR_THROW_COND_V(error != SIMPLE_OK, error);
+
+    m_string->data[m_string->size] = p_character;
+    m_string->size += 1;
+    
+    return SIMPLE_OK;
+}
