@@ -24,3 +24,14 @@ simple_types_error_t simple_types_string_create(simple_types_string_t** m_string
 inline void simple_types_string_retain(simple_types_string_t* m_string) {
     m_string->ref_count++;
 }
+
+static void simple_types_string_destroy(simple_types_string_t* m_string) {
+    if(m_string == NULL) return;
+    if(m_string->capacity != 0) free(m_string->data);
+    free(m_string);
+}
+
+inline void simple_types_string_release(simple_types_string_t* m_string) {
+    if(m_string == NULL) return;
+    if(--m_string->ref_count == 0) simple_types_string_destroy(m_string);
+}
