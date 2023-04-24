@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "error.h"
 #include "macros/error.h"
@@ -35,4 +36,15 @@ static void simple_types_string_destroy(simple_types_string_t* m_string) {
 inline void simple_types_string_release(simple_types_string_t* m_string) {
     if(m_string == NULL) return;
     if(--m_string->ref_count == 0) simple_types_string_destroy(m_string);
+}
+
+void simple_types_string_copy(simple_types_string_t* m_dest, const simple_types_string_t* p_source) {
+    if(m_dest == NULL || p_source == NULL) return;
+
+    simple_types_error_t error = SIMPLE_OK;
+
+    error = simple_types_string_reserve(m_dest, p_source->capacity);
+    SIMPLE_MACROS_ERROR_THROW_COND(error != SIMPLE_OK);
+
+    memcpy(m_dest->data, p_source->data, p_source->capacity * sizeof(char));
 }
