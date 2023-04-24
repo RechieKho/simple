@@ -38,15 +38,20 @@ inline void simple_types_string_release(simple_types_string_t* m_string) {
     if(--m_string->ref_count == 0) simple_types_string_destroy(m_string);
 }
 
-void simple_types_string_copy(simple_types_string_t* m_dest, const simple_types_string_t* p_source) {
-    if(m_dest == NULL || p_source == NULL) return;
+simple_types_error_t simple_types_string_copy(simple_types_string_t* m_dest, const simple_types_string_t* p_source) {
+    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(
+        m_dest == NULL || p_source == NULL, 
+        SIMPLE_FAIL_INVALID_ARGUMENTS, 
+        "Unexpected NULL as the 1st argument."
+    );
 
     simple_types_error_t error = SIMPLE_OK;
-
     error = simple_types_string_reserve(m_dest, p_source->capacity);
-    SIMPLE_MACROS_ERROR_THROW_COND(error != SIMPLE_OK);
+    SIMPLE_MACROS_ERROR_THROW_COND_V(error != SIMPLE_OK, error);
 
     memcpy(m_dest->data, p_source->data, p_source->capacity * sizeof(char));
+    m_dest->size = p_source->size;
+    return SIMPLE_OK;
 }
 
 simple_types_error_t simple_types_string_append_char(simple_types_string_t* m_string, char p_character) {
