@@ -20,3 +20,7 @@ simple_types_error_t simple_types_string_create(simple_types_string_t** m_string
     *m_string = new_string;
     return SIMPLE_OK;
 }
+
+inline void simple_types_string_retain(simple_types_string_t* m_string) {
+    m_string->ref_count++;
+}
