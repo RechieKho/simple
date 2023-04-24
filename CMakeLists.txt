@@ -16,7 +16,7 @@ file(GLOB_RECURSE MACROS_SRCS ${MACROS_DIR}/*.c)
 
 set(LIB_NAME ${PROJECT_NAME})
 add_library(
-    ${LIB_NAME}
+    ${LIB_NAME} STATIC
     ${TYPES_SRCS} ${MACROS_SRCS}
 )
 
