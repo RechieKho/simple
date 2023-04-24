@@ -21,5 +21,5 @@ add_library(
 )
 
 target_include_directories(
-    ${LIB_NAME} PRIVATE ${TYPES_DIR} ${MACROS_DIR}
+    ${LIB_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
 )
