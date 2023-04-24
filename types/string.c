@@ -6,6 +6,7 @@
 
 #include "error.h"
 #include "macros/error.h"
+#include "macros/memory.h"
 
 struct simple_types_string_t {
     size_t ref_count;
@@ -75,5 +76,16 @@ simple_types_error_t simple_types_string_append_char(simple_types_string_t* m_st
     m_string->data[m_string->size] = p_character;
     m_string->size += 1;
     
+    return SIMPLE_OK;
+}
+
+simple_types_error_t simple_types_string_reserve(simple_types_string_t* m_string, size_t p_min_capacity) {
+    simple_types_error_t error = SIMPLE_OK;
+    SIMPLE_MACROS_MEMORY_RESERVE(char, m_string->data, m_string->capacity, p_min_capacity, error);
+    if(error != SIMPLE_OK) {
+        m_string->capacity = 0;
+        m_string->size = 0;
+        return error;
+    }
     return SIMPLE_OK;
 }
