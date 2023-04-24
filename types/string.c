@@ -22,6 +22,7 @@ simple_types_error_t simple_types_string_create(simple_types_string_t** m_string
 }
 
 inline void simple_types_string_retain(simple_types_string_t* m_string) {
+    if(m_string == NULL) return;
     m_string->ref_count++;
 }
 
