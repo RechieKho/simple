@@ -8,6 +8,13 @@
 /* A reference counted growable string. */
 typedef struct simple_types_string_t simple_types_string_t;
 
+/* a marking to a string or a section of a string. */
+typedef struct simple_types_string_slice_t {
+    const char* begin;
+    size_t length;
+} simple_types_string_slice_t;
+
+
 simple_types_error_t simple_types_string_create(simple_types_string_t** m_string);
 simple_types_error_t simple_types_string_retain(simple_types_string_t* m_string); // Increase reference count.
 simple_types_error_t simple_types_string_release(simple_types_string_t* m_string); // Decrease reference count (and destroy if necessary).
@@ -16,5 +23,6 @@ simple_types_error_t simple_types_string_append_char(simple_types_string_t* m_st
 simple_types_error_t simple_types_string_reserve(simple_types_string_t* m_string, size_t p_min_capacity); // Pre-allocate memory.
 simple_types_error_t simple_types_string_size(const simple_types_string_t* p_string, size_t* m_size);
 simple_types_error_t simple_types_string_data(const simple_types_string_t* p_string, const char** m_data);
+simple_types_error_t simple_types_string_slice(const simple_types_string_t* p_string, size_t p_start, size_t p_end, simple_types_string_slice_t* m_slice);
 
 #endif//_SIMPLE_TYPE_STRING_H_

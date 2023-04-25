@@ -96,3 +96,12 @@ simple_types_error_t simple_types_string_data(const simple_types_string_t* p_str
     *m_data = p_string->data;
     return SIMPLE_OK;
 }
+
+simple_types_error_t simple_types_string_slice(const simple_types_string_t* p_string, size_t p_start, size_t p_end, simple_types_string_slice_t* m_slice) {
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(
+        p_string == NULL || m_slice == NULL || p_end > p_string->size || p_start >= p_string->size
+    );
+    m_slice->begin = p_string->data + p_start;
+    m_slice->length = p_end - p_start;
+    return SIMPLE_OK;
+}
