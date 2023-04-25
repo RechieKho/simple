@@ -93,3 +93,7 @@ simple_types_error_t simple_types_string_reserve(simple_types_string_t* m_string
 inline size_t simple_types_string_size(const simple_types_string_t* p_string) {
     return p_string->size;
 }
+
+inline const char* simple_types_string_data(const simple_types_string_t* p_string) {
+    return p_string->data;
+}
