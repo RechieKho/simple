@@ -58,4 +58,7 @@
         return; \
     }
 
+#define SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(p_is_arg_invalid) \
+    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG((p_is_arg_invalid), SIMPLE_FAIL_INVALID_ARGUMENTS, "Invalid argument(s).");
+
 #endif//_SIMPLE_MACROS_ERROR_H_

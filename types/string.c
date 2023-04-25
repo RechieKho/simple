@@ -16,7 +16,7 @@ struct simple_types_string_t {
 };
 
 simple_types_error_t simple_types_string_create(simple_types_string_t** m_string) {
-    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(m_string == NULL, SIMPLE_FAIL_INVALID_ARGUMENTS, "Unexpected NULL as the 1st argument.");
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(m_string == NULL);
     simple_types_string_t* new_string = (simple_types_string_t*)calloc(1, sizeof(simple_types_string_t));
     SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(new_string == NULL, SIMPLE_FAIL_CANT_ALLOCATE_MEMORY, "Unable to create string.");
     new_string->ref_count = 1;
@@ -25,20 +25,20 @@ simple_types_error_t simple_types_string_create(simple_types_string_t** m_string
 }
 
 inline simple_types_error_t simple_types_string_retain(simple_types_string_t* m_string) {
-    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(m_string == NULL, SIMPLE_FAIL_INVALID_ARGUMENTS, "Unexpected NULL as the 1st argument.");
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(m_string == NULL);
     m_string->ref_count++;
     return SIMPLE_OK;
 }
 
 static simple_types_error_t simple_types_string_destroy(simple_types_string_t* m_string) {
-    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(m_string == NULL, SIMPLE_FAIL_INVALID_ARGUMENTS, "Unexpected NULL as the 1st argument.");
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(m_string == NULL);
     if(m_string->capacity != 0) free(m_string->data);
     free(m_string);
     return SIMPLE_OK;
 }
 
 inline simple_types_error_t simple_types_string_release(simple_types_string_t* m_string) {
-    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(m_string == NULL, SIMPLE_FAIL_INVALID_ARGUMENTS, "Unexpected NULL as the 1st argument.");
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(m_string == NULL);
     if(--m_string->ref_count == 0) {
         simple_types_error_t error = simple_types_string_destroy(m_string);
         SIMPLE_MACROS_ERROR_THROW_COND_V(error != SIMPLE_OK, error);
@@ -47,10 +47,8 @@ inline simple_types_error_t simple_types_string_release(simple_types_string_t* m
 }
 
 simple_types_error_t simple_types_string_copy(simple_types_string_t* m_dest, const simple_types_string_t* p_source) {
-    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(
-        m_dest == NULL || p_source == NULL, 
-        SIMPLE_FAIL_INVALID_ARGUMENTS, 
-        "Unexpected NULL as the 1st argument."
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(
+        m_dest == NULL || p_source == NULL
     );
 
     simple_types_error_t error = SIMPLE_OK;
@@ -63,11 +61,7 @@ simple_types_error_t simple_types_string_copy(simple_types_string_t* m_dest, con
 }
 
 simple_types_error_t simple_types_string_append_char(simple_types_string_t* m_string, char p_character) {
-    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(
-        m_string == NULL, 
-        SIMPLE_FAIL_INVALID_ARGUMENTS, 
-        "Unexpected NULL as the 1st argument."
-    );
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(m_string == NULL);
 
     simple_types_error_t error = SIMPLE_OK;
     error = simple_types_string_reserve(m_string, m_string->size + 1);
@@ -91,21 +85,13 @@ simple_types_error_t simple_types_string_reserve(simple_types_string_t* m_string
 }
 
 simple_types_error_t simple_types_string_size(const simple_types_string_t* p_string, size_t* m_size) {
-    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(
-        p_string != NULL && m_size != NULL,
-        SIMPLE_FAIL_INVALID_ARGUMENTS,
-        "Unexpected NULL as argument."
-    );
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(p_string == NULL || m_size == NULL);
     *m_size = p_string->size;
     return SIMPLE_OK;
 }
 
 simple_types_error_t simple_types_string_data(const simple_types_string_t* p_string, const char** m_data) {
-    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(
-        p_string != NULL &&  m_data != NULL,
-        SIMPLE_FAIL_INVALID_ARGUMENTS,
-        "Unexpected NULL as argument."
-    );
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(p_string == NULL || m_data == NULL);
     *m_data = p_string->data;
     return SIMPLE_OK;
 }
