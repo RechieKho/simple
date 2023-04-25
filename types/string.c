@@ -90,10 +90,22 @@ simple_types_error_t simple_types_string_reserve(simple_types_string_t* m_string
     return SIMPLE_OK;
 }
 
-inline size_t simple_types_string_size(const simple_types_string_t* p_string) {
-    return p_string->size;
+simple_types_error_t simple_types_string_size(const simple_types_string_t* p_string, size_t* m_size) {
+    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(
+        p_string != NULL && m_size != NULL,
+        SIMPLE_FAIL_INVALID_ARGUMENTS,
+        "Unexpected NULL as argument."
+    );
+    *m_size = p_string->size;
+    return SIMPLE_OK;
 }
 
-inline const char* simple_types_string_data(const simple_types_string_t* p_string) {
-    return p_string->data;
+simple_types_error_t simple_types_string_data(const simple_types_string_t* p_string, const char** m_data) {
+    SIMPLE_MACROS_ERROR_FAIL_COND_V_MSG(
+        p_string != NULL &&  m_data != NULL,
+        SIMPLE_FAIL_INVALID_ARGUMENTS,
+        "Unexpected NULL as argument."
+    );
+    *m_data = p_string->data;
+    return SIMPLE_OK;
 }
