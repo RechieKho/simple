@@ -74,6 +74,7 @@ simple_types_error_t simple_types_string_append_char(simple_types_string_t* m_st
 }
 
 simple_types_error_t simple_types_string_reserve(simple_types_string_t* m_string, size_t p_min_capacity) {
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(m_string == NULL);
     simple_types_error_t error = SIMPLE_OK;
     SIMPLE_MACROS_MEMORY_RESERVE(char, m_string->data, m_string->capacity, p_min_capacity, error);
     if(error != SIMPLE_OK) {
