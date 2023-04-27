@@ -31,5 +31,6 @@ simple_types_error_t simple_types_string_size(const simple_types_string_t* p_str
 simple_types_error_t simple_types_string_data(const simple_types_string_t* p_string, const char** m_data);
 simple_types_error_t simple_types_string_slice(const simple_types_string_t* p_string, size_t p_start, size_t p_end, simple_types_string_slice_t* m_slice);
 simple_types_error_t simple_types_string_append_slice(simple_types_string_t* m_string, simple_types_string_slice_t p_slice);
+simple_types_error_t simple_types_string_compare(const simple_types_string_t* p_string_a, const simple_types_string_t* p_string_b, bool* m_is_equal);
 
 #endif//_SIMPLE_TYPE_STRING_H_
