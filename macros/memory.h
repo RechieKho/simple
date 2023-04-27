@@ -21,4 +21,7 @@
         } \
     } while(false);
 
+#define SIMPLE_MACROS_MEMORY_GET_ARRAY_SIZE(p_array) \
+    ((sizeof(p_array) == 0) ? 0 : (sizeof(p_array) / sizeof(p_array[0])))
+
 #endif//_SIMPLE_MACROS_MEMORY_H_
