@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 
+#include "macros/memory.h"
 #include "error.h"
 
 /* A reference counted growable string. */
@@ -14,6 +15,11 @@ typedef struct simple_types_string_slice_t {
     size_t length;
 } simple_types_string_slice_t;
 
+#define SIMPLE_TYPES_STRING_SLICE_MAKE_FROM_CSTRING(p_cstring) \
+    (simple_types_string_slice_t){ \
+        .begin = (p_cstring), \
+        .length = SIMPLE_MACROS_MEMORY_GET_ARRAY_SIZE(p_cstring) \
+    }
 
 simple_types_error_t simple_types_string_create(simple_types_string_t** m_string);
 simple_types_error_t simple_types_string_retain(simple_types_string_t* m_string); // Increase reference count.
