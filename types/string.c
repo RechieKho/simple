@@ -105,3 +105,15 @@ simple_types_error_t simple_types_string_slice(const simple_types_string_t* p_st
     m_slice->length = p_end - p_start;
     return SIMPLE_OK;
 }
+
+simple_types_error_t simple_types_string_append_slice(simple_types_string_t* m_string, simple_types_string_slice_t p_slice) {
+    SIMPLE_MACROS_ERROR_FAIL_INVALID_ARGUMENTS(m_string == NULL || p_slice.begin == NULL);
+
+    simple_types_error_t error = SIMPLE_OK;
+    error = simple_types_string_reserve(m_string, m_string->size + p_slice.length);
+    SIMPLE_MACROS_ERROR_THROW_COND_V(error != SIMPLE_OK, error);
+
+    memcpy(m_string->data + m_string->size, p_slice.begin, p_slice.length);
+    m_string->size += p_slice.length;
+    return SIMPLE_OK;
+}
